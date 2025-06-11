@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Bank Card - Whalet</title>
+    <title>企业详情 - Whalet</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -72,12 +72,56 @@
         .form-grid-full {
             grid-column: span 2;
         }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .info-label {
+            font-size: 0.875rem;
+            color: #6B7280;
+            font-weight: 500;
+        }
+        .info-value {
+            font-size: 0.875rem;
+            color: #1F2937;
+        }
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .document-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .document-placeholder {
+            width: 120px;
+            height: 80px;
+            background-color: #F3F4F6;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9CA3AF;
+            font-size: 0.75rem;
+        }
         @media (max-width: 640px) {
-            .form-grid {
+            .form-grid, .info-grid {
                 grid-template-columns: 1fr;
             }
             .form-grid-full {
                 grid-column: span 1;
+            }
+            .document-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -92,7 +136,7 @@
                         <i class="fas fa-arrow-left"></i>
                     </a>
                     <a href="javascript:history.back()" class="text-purple-600 hover:text-purple-700 mr-4">Back</a>
-                    <h1 class="text-lg font-medium text-gray-800">Customer Detail</h1>
+                    <h1 class="text-lg font-medium text-gray-800">Details</h1>
                 </div>
             </div>
             <!-- 内容区 -->
@@ -101,129 +145,188 @@
                 <div class="bg-white rounded-2xl shadow border border-gray-100 mb-4">
                     <div class="border-b border-gray-200">
                         <nav class="flex space-x-8 px-6">
-                            <button onclick="switchTab('va-list')" id="va-list-tab" class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-purple-500 text-purple-600">
-                                VA List
+                            <button onclick="switchTab('basic-info')" id="basic-info-tab" class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-purple-500 text-purple-600">
+                                Basic Information
                             </button>
-                            <button onclick="switchTab('collection')" id="collection-tab" class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                                Collection List
+                            <button onclick="switchTab('documents')" id="documents-tab" class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                                Documents
+                            </button>
+                            <button onclick="switchTab('member-info')" id="member-info-tab" class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                                Member Information
                             </button>
                         </nav>
                     </div>
                     
-                    <!-- VA List Tab Content -->
-                    <div id="va-list-content" class="tab-content p-6">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-100 text-xs">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-3 py-3 text-left font-semibold text-gray-500 uppercase">CARD ACCOUNT NAME</th>
-                                        <th class="px-3 py-3 text-left font-semibold text-gray-500 uppercase">PLATFORM NAME</th>
-                                        <th class="px-3 py-3 text-left font-semibold text-gray-500 uppercase">CURRENCY</th>
-                                        <th class="px-3 py-3 text-left font-semibold text-gray-500 uppercase">BANK NAME</th>
-                                        <th class="px-3 py-3 text-left font-semibold text-gray-500 uppercase">ACCOUNT NUMBER</th>
-                                        <th class="px-3 py-3 text-left font-semibold text-gray-500 uppercase">STATUS</th>
-                                        <th class="px-3 py-3 text-left font-semibold text-gray-500 uppercase">UPCOMING CANCEL DATE</th>
-                                        <th class="px-3 py-3 text-left font-semibold text-gray-500 uppercase">CREATED AT</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-100">
-                                    <tr>
-                                        <td class="px-3 py-3 whitespace-nowrap">ABC Trading Virtual</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">Whalet</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">USD</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">Bank of China</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">1234-5678-9012-3456</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
-                                                <span class="w-1.5 h-1.5 bg-green-400 rounded-full mr-1"></span>Active
-                                            </span>
-                                        </td>
-                                        <td class="px-3 py-3 whitespace-nowrap">2024-12-31</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">2023-08-15 14:30:45</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-3 py-3 whitespace-nowrap">XYZ Import Virtual</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">Whalet</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">EUR</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">HSBC</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">9876-5432-1098-7654</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
-                                                <span class="w-1.5 h-1.5 bg-yellow-400 rounded-full mr-1"></span>Pending
-                                            </span>
-                                        </td>
-                                        <td class="px-3 py-3 whitespace-nowrap">2024-11-30</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">2023-08-16 09:15:22</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-3 py-3 whitespace-nowrap">DEF Corp Virtual</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">Whalet</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">GBP</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">Standard Chartered</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">5555-4444-3333-2222</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">
-                                                <span class="w-1.5 h-1.5 bg-red-400 rounded-full mr-1"></span>Cancelled
-                                            </span>
-                                        </td>
-                                        <td class="px-3 py-3 whitespace-nowrap">-</td>
-                                        <td class="px-3 py-3 whitespace-nowrap">2023-08-10 11:20:15</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <!-- 企业基本信息 Tab Content -->
+                    <div id="basic-info-content" class="tab-content p-6">
+                        <div class="space-y-6">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Company Name:</div>
+                                    <div class="info-value">测试香港企业主高户</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Company English Name:</div>
+                                    <div class="info-value">xiang gan 高欢</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Registration Number:</div>
+                                    <div class="info-value">2938948398493</div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Registered Address:</div>
+                                    <div class="info-value">香港特别行政区 香港地区 深水埗区 阿咋莱劳</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Business Address:</div>
+                                    <div class="info-value">香港特别行政区 香港地区 深水埗区 阿咋莱劳</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Incorporation Date:</div>
+                                    <div class="info-value">2022-07-05</div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Expiry Date:</div>
+                                    <div class="info-value">2027-07-15</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Export Products:</div>
+                                    <div class="info-value">货物贸易：箱包</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Target Market:</div>
+                                    <div class="info-value">英国</div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Number of Employees:</div>
+                                    <div class="info-value">10到20人</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Historical Export Volume:</div>
+                                    <div class="info-value">123万美元</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Estimated Annual Export:</div>
+                                    <div class="info-value">123万美元</div>
+                                </div>
+                            </div>
+                            
+
                         </div>
                     </div>
                     
-                    <!-- Collection Tab Content -->
-                    <div id="collection-content" class="tab-content p-6 hidden">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-100 text-xs">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-2 py-2 text-left font-semibold text-gray-500 uppercase">TRANSACTION ID</th>
-                                        <th class="px-2 py-2 text-left font-semibold text-gray-500 uppercase">CUSTOMER ID</th>
-                                        <th class="px-2 py-2 text-left font-semibold text-gray-500 uppercase">CUSTOMER NAME</th>
-                                        <th class="px-2 py-2 text-left font-semibold text-gray-500 uppercase">ACCOUNT NUMBER</th>
-                                        <th class="px-2 py-2 text-left font-semibold text-gray-500 uppercase">COLLECTION AMOUNT</th>
-                                        <th class="px-2 py-2 text-left font-semibold text-gray-500 uppercase">RECEIVED AMOUNT</th>
-                                        <th class="px-2 py-2 text-left font-semibold text-gray-500 uppercase">PAYER NAME</th>
-                                        <th class="px-2 py-2 text-left font-semibold text-gray-500 uppercase">STATUS</th>
-                                        <th class="px-2 py-2 text-left font-semibold text-gray-500 uppercase">COLLECTION TIME</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-100">
-                                    <tr>
-                                        <td class="px-2 py-2 whitespace-nowrap">TR123456789</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">USER12345</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">ABC Trading Co.</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">8765-4321-8765-4321</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">$5,000.00</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">$4,850.00</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">John Smith</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700">
-                                                <span class="w-1.5 h-1.5 bg-green-400 rounded-full mr-1"></span>Completed
-                                            </span>
-                                        </td>
-                                        <td class="px-2 py-2 whitespace-nowrap">2023-08-15 14:30:45</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-2 py-2 whitespace-nowrap">TR123456790</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">USER12346</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">XYZ Imports Ltd.</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">1234-5678-1234-5678</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">€3,500.00</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">€3,395.00</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">Maria Garcia</td>
-                                        <td class="px-2 py-2 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
-                                                <span class="w-1.5 h-1.5 bg-yellow-400 rounded-full mr-1"></span>Pending
-                                            </span>
-                                        </td>
-                                        <td class="px-2 py-2 whitespace-nowrap">2023-08-16 09:15:22</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <!-- 企业基本资料 Tab Content -->
+                    <div id="documents-content" class="tab-content p-6 hidden">
+                        <div class="document-grid">
+                            <div class="document-item">
+                                <div class="info-label">Certificate of Incorporation (CI):</div>
+                                <div class="document-placeholder">
+                                    <i class="fas fa-image text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="document-item">
+                                <div class="info-label">Business Registration (BR):</div>
+                                <div class="document-placeholder">
+                                    <i class="fas fa-image text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="document-item">
+                                <div class="info-label">Articles of Association (NC):</div>
+                                <div class="document-placeholder">
+                                    <i class="fas fa-image text-2xl"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="document-item">
+                                <div class="info-label">Annual Return (NAR):</div>
+                                <div class="document-placeholder">
+                                    <i class="fas fa-image text-2xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 成员信息 Tab Content -->
+                    <div id="member-info-content" class="tab-content p-6 hidden">
+                        <div class="space-y-6">
+                            <h3 class="text-base font-medium text-gray-900">WO WEN WEN (Member Information)</h3>
+                            
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Name:</div>
+                                    <div class="info-value">我问问</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">English Name:</div>
+                                    <div class="info-value">WO WEN WEN</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">ID Number:</div>
+                                    <div class="info-value">2103031990010011250</div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Member Role:</div>
+                                    <div class="info-value">实际控制人</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Member Region:</div>
+                                    <div class="info-value">香港（中国）</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Date of Birth:</div>
+                                    <div class="info-value">2021-07-13</div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">Recent Address:</div>
+                                    <div class="info-value">河北省 邯郸市 肥乡区 阿咋莱劳</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Residential Address:</div>
+                                    <div class="info-value">河北省 邯郸市 肥乡区 阿咋莱劳</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Shareholding Percentage:</div>
+                                    <div class="info-value">33%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <div class="info-label">ID Validity Period:</div>
+                                    <div class="info-value">2020-07-06 - 2027-07-15</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">ID Front Side:</div>
+                                    <div class="document-placeholder" style="width: 120px; height: 80px;">
+                                        <i class="fas fa-image text-2xl"></i>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">ID with Holder:</div>
+                                    <div class="document-placeholder" style="width: 120px; height: 80px;">
+                                        <i class="fas fa-image text-2xl"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
                         </div>
                     </div>
                 </div>
