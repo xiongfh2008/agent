@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whalet</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <script src="js/languages.js"></script>
+
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- 顶部导航栏 -->
+    <header>
+        <div class="flex items-center">
+            <div>
+                <img src="assets/images/whaletlogo-white.png" alt="Whalet Logo" class="h-8">
+            </div>
+        </div>
+    </header>
+
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 侧边栏 -->
+        <aside id="sidebar" class="bg-white">
+            <div class="sidebar-content">
+                <ul>
+                    <li>
+                        <div class="menu-item" data-page="pages/home.html">
+                            <i class="fas fa-home"></i>
+                            <span class="menu-text" data-i18n="menu_home">Home</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="menu-item" data-toggle="submenu-customer">
+                            <i class="fas fa-users"></i>
+                            <span class="menu-text" data-i18n="menu_customer_management">Customer</span>
+                            <i class="fas fa-chevron-down submenu-toggle"></i>
+                        </div>
+                        <ul class="submenu" id="submenu-customer">
+                            <li>
+                                <div class="menu-item" data-page="pages/user-list.html">
+                                    <span class="menu-text" data-i18n="menu_user_list">Customer List</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-item" data-page="pages/va-list.html">
+                                    <span class="menu-text" data-i18n="menu_va_list">VA List</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="menu-item" data-page="pages/forex.html">
+                            <i class="fas fa-coins"></i>
+                            <span class="menu-text">Forex</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="menu-item" data-toggle="submenu-transfer">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span class="menu-text" data-i18n="menu_transfer">Transfer</span>
+                            <i class="fas fa-chevron-down submenu-toggle"></i>
+                        </div>
+                        <ul class="submenu" id="submenu-transfer">
+                            <li>
+                                <div class="menu-item" data-page="pages/withdrawal.html">
+                                    <span class="menu-text" data-i18n="menu_transfer_list">Withdrawal</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-item" data-page="pages/International Remittance.html">
+                                    <span class="menu-text" data-i18n="menu_new_transfer">Payment</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="menu-item" data-toggle="submenu-transaction">
+                            <i class="fas fa-search"></i>
+                            <span class="menu-text" data-i18n="menu_transaction_inquiry">Transactions</span>
+                            <i class="fas fa-chevron-down submenu-toggle"></i>
+                        </div>
+                        <ul class="submenu" id="submenu-transaction">
+                            <li>
+                                <div class="menu-item" data-page="pages/collection-transaction.html">
+                                    <span class="menu-text">Collection</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-item" data-page="pages/forex-transaction.html">
+                                    <span class="menu-text">Forex</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-item" data-page="pages/withdrawal-transaction.html">
+                                    <span class="menu-text">Withdrawal</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-item" data-page="pages/payment-transaction.html">
+                                    <span class="menu-text">Payment</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="menu-item" data-toggle="submenu-account">
+                            <i class="fas fa-cog"></i>
+                            <span class="menu-text" data-i18n="menu_account_settings">Settings</span>
+                            <i class="fas fa-chevron-down submenu-toggle"></i>
+                        </div>
+                        <ul class="submenu" id="submenu-account">
+                            <li>
+                                <div class="menu-item" data-page="pages/basic-settings.html">
+                                    <span class="menu-text" data-i18n="menu_basic_settings">Basic Settings</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="menu-item" data-page="pages/security-settings.html">
+                                    <span class="menu-text" data-i18n="menu_security_settings">Security Settings</span>
+                                </div>
+                            </li>
+                            <!-- 
+                            <li>
+                                <div class="menu-item" data-page="pages/referral.html">
+                                    <span class="menu-text" data-i18n="menu_referral">Exclusive Links</span>
+                                </div>
+                            </li>
+                            -->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        
+        <!-- 遮罩层 -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- 内容区域 -->
+        <main id="content-area">
+            <iframe id="content-frame" src="pages/home.html" title="内容" class="w-full h-full border-0"></iframe>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
+    <script>
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', () => {
+            // 退出登录按钮已删除
+
+            const sidebar = document.getElementById('sidebar');
+            const contentArea = document.getElementById('content-area');
+            const overlay = document.querySelector('.sidebar-overlay');
+
+            // 处理菜单项点击
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    const page = this.getAttribute('data-page');
+                    const toggleId = this.getAttribute('data-toggle');
+                    
+                    // 移除所有菜单项的active类
+                    document.querySelectorAll('.menu-item').forEach(menuItem => {
+                        menuItem.classList.remove('active');
+                    });
+                    
+                    // 为当前点击的菜单项添加active类
+                    this.classList.add('active');
+                    
+                    if (toggleId) {
+                        const submenu = document.getElementById(toggleId);
+                        if (submenu) {
+                            // 关闭其他子菜单
+                            document.querySelectorAll('.submenu').forEach(menu => {
+                                if (menu !== submenu) {
+                                    menu.classList.remove('open');
+                                    const toggle = menu.previousElementSibling.querySelector('.submenu-toggle');
+                                    if (toggle) {
+                                        toggle.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                                    }
+                                }
+                            });
+
+                            // 切换当前子菜单
+                            submenu.classList.toggle('open');
+                            const chevron = this.querySelector('.submenu-toggle');
+                            if (chevron) {
+                                if (submenu.classList.contains('open')) {
+                                    chevron.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                                } else {
+                                    chevron.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (page) {
+                        loadPage(page);
+                    }
+                });
+            });
+
+            // 加载页面函数
+            function loadPage(page) {
+                const iframe = document.getElementById('content-frame');
+                if (iframe) {
+                    let pagePath = page;
+                    if (typeof page === 'string') {
+                        if (page === 'home') {
+                            pagePath = 'pages/home.html';
+                        } else if (!page.endsWith('.html')) {
+                            pagePath = `pages/${page}.html`;
+                        }
+                    }
+                    iframe.src = pagePath;
+                }
+            }
+
+            // 设置初始页面
+            loadPage('home');
+        });
+    </script>
+</body>
+</html> 
