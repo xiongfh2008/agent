@@ -231,6 +231,11 @@
                                 <span class="menu-text">Payment</span>
                             </div>
                         </li>
+                        <li>
+                            <div class="menu-item" data-page="pages/acquiring-transaction.html">
+                                <span class="menu-text">Acquiring</span>
+                            </div>
+                        </li>
                     </ul>
                 </li>
                 
@@ -343,7 +348,39 @@
                 }
                 console.log('Loading page:', pagePath);
                 iframe.src = pagePath;
+                
+                // 更新菜单选中状态
+                updateMenuSelection(pagePath);
             }
+        }
+
+        // 更新菜单选中状态
+        function updateMenuSelection(currentPage) {
+            // 移除所有菜单项的选中状态
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // 找到当前页面对应的菜单项并添加选中状态
+            document.querySelectorAll('.menu-item[data-page]').forEach(item => {
+                const itemPage = item.getAttribute('data-page');
+                if (itemPage === currentPage) {
+                    item.classList.add('active');
+                    
+                    // 如果是二级菜单项，确保父级菜单展开
+                    const parentSubmenu = item.closest('.submenu');
+                    if (parentSubmenu) {
+                        parentSubmenu.classList.add('open');
+                        const parentMenuItem = parentSubmenu.previousElementSibling;
+                        if (parentMenuItem) {
+                            const chevron = parentMenuItem.querySelector('.submenu-toggle');
+                            if (chevron) {
+                                chevron.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         // 获取当前语言
@@ -493,6 +530,9 @@
             // 初始化页面
             const initialPage = window.location.hash.slice(1) || 'pages/user-list.html';
             loadPage(initialPage);
+            
+            // 确保初始页面的菜单项被正确选中
+            updateMenuSelection(initialPage);
         });
     </script>
 
