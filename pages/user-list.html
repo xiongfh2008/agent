@@ -267,17 +267,45 @@
 <body class="bg-gray-50">
     <div class="container mx-auto py-4 px-4 max-w-7xl">
         <!-- 头部区域 -->
-        <div class="flex items-center justify-between mb-4">
-            <h1 class="text-xl font-semibold text-gray-800" data-i18n="user_list_title" style="display: none;">Customer List</h1>
-            <div class="flex space-x-2">
-                <button class="btn-primary px-3 py-1.5 rounded-md flex items-center text-sm" style="display: none;">
-                    <i class="fas fa-plus mr-1.5 text-xs"></i>
-                    <span data-i18n="add_user">Add Customer</span>
-                </button>
-                <button class="btn-outline px-3 py-1.5 rounded-md flex items-center text-sm" style="display: none;">
-                    <i class="fas fa-download mr-1.5 text-xs"></i>
-                    <span data-i18n="export">Export</span>
-                </button>
+        <div class="flex items-center justify-end mb-4">
+            <div class="flex items-center space-x-4">
+                <!-- 语言切换 -->
+                <div class="relative">
+                    <button class="flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 rounded-md hover:bg-gray-100 transition-colors" id="language-toggle">
+                        <i class="fas fa-globe mr-2"></i>
+                        <span id="current-language">English</span>
+                        <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                    </button>
+                    <div class="absolute right-0 mt-1 w-36 bg-white border border-gray-200 rounded-md shadow-lg z-50 hidden" id="language-dropdown">
+                        <div class="py-1">
+                            <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors language-option" data-lang="zh">
+                                简体中文
+                            </button>
+                            <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors language-option" data-lang="en">
+                                English
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 用户中心 -->
+                <div class="relative">
+                    <button class="flex items-center justify-center w-8 h-8 text-gray-600 hover:text-gray-800 rounded-full hover:bg-gray-100 transition-colors" id="user-center-toggle">
+                        <i class="fas fa-user-circle text-lg"></i>
+                    </button>
+                    <div class="absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 hidden" id="user-center-dropdown">
+                        <div class="py-1">
+                            <a href="basic-settings.html" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center">
+                                <i class="fas fa-user mr-3 text-xs"></i>
+                                <span data-i18n="basic_info">Basic Info</span>
+                            </a>
+                            <a href="security-settings.html" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center">
+                                <i class="fas fa-shield-alt mr-3 text-xs"></i>
+                                <span data-i18n="security_settings">Security Settings</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -285,11 +313,11 @@
         <div class="card bg-white p-4 mb-4 border border-gray-100">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-3">
                 <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="user_id">User ID</label>
+                    <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="user_id">UserID</label>
                     <input type="text" class="w-full border border-gray-200 rounded-md px-2.5 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-purple-300 search-input">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="user_name">User Name</label>
+                    <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="user_name">UserName</label>
                     <input type="text" class="w-full border border-gray-200 rounded-md px-2.5 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-purple-300 search-input">
                 </div>
                 <div>
@@ -304,9 +332,10 @@
                     <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="status">Status</label>
                     <select class="w-full border border-gray-200 rounded-md px-2.5 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-purple-300 search-input">
                         <option value="" data-i18n="all">All</option>
-                        <option value="active" data-i18n="active">Active</option>
-                        <option value="inactive" data-i18n="inactive">Inactive</option>
-                        <option value="pending" data-i18n="pending">Pending</option>
+                        <option value="not_verified" data-i18n="not_verified">Not Verified</option>
+                        <option value="verified" data-i18n="verified">Verified</option>
+                        <option value="expired" data-i18n="expired">Expired</option>
+                        <option value="frozen" data-i18n="frozen">Account Frozen</option>
                     </select>
                 </div>
             </div>
@@ -342,27 +371,28 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="user_id" data-field="user_id">
-                                User ID
+                                USERID
                             </th>
                             <th scope="col" class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="user_name" data-field="user_name">
-                                User Name
+                                USERNAME
                             </th>
                             <th scope="col" class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="entity_type" data-field="entity_type">
-                                Entity Type
+                                ENTITY TYPE
                             </th>
                             <th scope="col" class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="email" data-field="email">
-                                Email
+                                EMAIL
                             </th>
                             <th scope="col" class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="phone" data-field="phone">
-                                Phone
+                                PHONE
                             </th>
                             <th scope="col" class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="status" data-field="status">
-                                Status
+                                STATUS
                             </th>
                             <th scope="col" class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="registration_time" data-field="registration_time">
-                                Registration Time
+                                REGISTRATION TIME
                             </th>
                             <th scope="col" class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-i18n="operation" data-field="operation">
+                                OPERATION
                                 <i class="fas fa-cog config-icon" id="table-config-icon"></i>
                             </th>
                         </tr>
@@ -385,8 +415,8 @@
                                 +1 234-567-8901
                             </td>
                             <td class="whitespace-nowrap">
-                                <span class="status-badge status-active" data-i18n="active">
-                                    Active
+                                <span class="status-badge status-verified" data-i18n="verified">
+                                    Verified
                                 </span>
                             </td>
                             <td class="whitespace-nowrap text-gray-700">
@@ -413,8 +443,8 @@
                                 +44 20 1234 5678
                             </td>
                             <td class="whitespace-nowrap">
-                                <span class="status-badge status-inactive" data-i18n="inactive">
-                                    Inactive
+                                <span class="status-badge status-expired" data-i18n="expired">
+                                    Expired
                                 </span>
                             </td>
                             <td class="whitespace-nowrap text-gray-700">
@@ -441,8 +471,8 @@
                                 +86 138-0013-8000
                             </td>
                             <td class="whitespace-nowrap">
-                                <span class="status-badge status-pending" data-i18n="pending">
-                                    Pending
+                                <span class="status-badge status-not-verified" data-i18n="not_verified">
+                                    Not Verified
                                 </span>
                             </td>
                             <td class="whitespace-nowrap text-gray-700">
@@ -480,7 +510,7 @@
     <div class="config-modal" id="config-modal">
         <div class="config-modal-content">
             <div class="config-modal-header">
-                <h3 class="text-lg font-medium text-gray-800" data-i18n="column_config">Configuration (<span id="selected-columns-count">7</span>/<span id="total-columns-count">7</span>)</h3>
+                <h3 class="text-lg font-medium text-gray-800" data-i18n="column_config">Column Configuration (<span id="selected-columns-count">7</span>/<span id="total-columns-count">7</span>)</h3>
                 <span class="config-modal-close" id="config-modal-close">×</span>
             </div>
             <div class="config-items-container" id="config-items-container">
@@ -489,28 +519,171 @@
             <div class="config-modal-footer">
                 <button class="config-action-btn config-cancel-btn" id="config-cancel-btn" data-i18n="cancel">Cancel</button>
                 <button class="config-action-btn config-save-btn" id="config-save-btn" data-i18n="save">Save</button>
-                <button class="config-action-btn config-cancel-btn" id="config-restore-btn" data-i18n="restore" style="margin-right: auto;">Reset</button>
+                <button class="config-action-btn config-cancel-btn" id="config-restore-btn" data-i18n="restore" style="margin-right: auto;">Restore Default</button>
             </div>
         </div>
     </div>
 
     <script>
+        // 语言配置
+        const languages = {
+            zh: {
+                user_list_title: '客户列表',
+                add_user: '添加客户',
+                export: '导出',
+                user_id: '用户ID',
+                user_name: '用户名称',
+                entity_type: '实体类型',
+                email: '邮箱',
+                phone: '电话',
+                status: '状态',
+                registration_time: '注册时间',
+                operation: '操作',
+                all: '全部',
+                active: '活跃',
+                inactive: '非活跃',
+                pending: '待审核',
+                reset: '重置',
+                search: '搜索',
+                view_details: '详情',
+                showing: '显示',
+                to: '到',
+                of: '共',
+                results: '条结果',
+                column_config: '列配置',
+                cancel: '取消',
+                save: '保存',
+                restore: '恢复默认',
+                basic_info: '基本信息',
+                security_settings: '安全设置'
+            },
+            en: {
+                user_list_title: 'Customer List',
+                add_user: 'Add Customer',
+                export: 'Export',
+                user_id: 'User ID',
+                user_name: 'User Name',
+                entity_type: 'Entity Type',
+                email: 'Email',
+                phone: 'Phone',
+                status: 'Status',
+                registration_time: 'Registration Time',
+                operation: 'Operation',
+                all: 'All',
+                active: 'Active',
+                inactive: 'Inactive',
+                pending: 'Pending',
+                reset: 'Reset',
+                search: 'Search',
+                view_details: 'Details',
+                showing: 'Showing',
+                to: 'to',
+                of: 'of',
+                results: 'results',
+                column_config: 'Column Configuration',
+                cancel: 'Cancel',
+                save: 'Save',
+                restore: 'Restore Default',
+                basic_info: 'Basic Info',
+                security_settings: 'Security Settings'
+            }
+        };
+
+        // 当前语言
+        let currentLanguage = 'en';
+
+        // 语言切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageToggle = document.getElementById('language-toggle');
+            const languageDropdown = document.getElementById('language-dropdown');
+            const currentLanguageSpan = document.getElementById('current-language');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            // 用户中心功能
+            const userCenterToggle = document.getElementById('user-center-toggle');
+            const userCenterDropdown = document.getElementById('user-center-dropdown');
+
+            // 语言切换下拉菜单
+            languageToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                languageDropdown.classList.toggle('hidden');
+                userCenterDropdown.classList.add('hidden'); // 关闭用户中心下拉菜单
+            });
+
+            // 语言选择
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    if (selectedLang !== currentLanguage) {
+                        currentLanguage = selectedLang;
+                        currentLanguageSpan.textContent = selectedLang === 'zh' ? '简体中文' : 'English';
+                        updatePageContent(selectedLang);
+                        languageDropdown.classList.add('hidden');
+                    }
+                });
+            });
+
+            // 用户中心下拉菜单
+            userCenterToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                userCenterDropdown.classList.toggle('hidden');
+                languageDropdown.classList.add('hidden'); // 关闭语言切换下拉菜单
+            });
+
+            // 点击页面其他地方关闭下拉菜单
+            document.addEventListener('click', function(e) {
+                if (!languageToggle.contains(e.target) && !languageDropdown.contains(e.target)) {
+                    languageDropdown.classList.add('hidden');
+                }
+                if (!userCenterToggle.contains(e.target) && !userCenterDropdown.contains(e.target)) {
+                    userCenterDropdown.classList.add('hidden');
+                }
+            });
+        });
+
+        // 更新页面内容
+        function updatePageContent(lang) {
+            const translations = languages[lang];
+            if (!translations) return;
+
+            // 更新所有带有 data-i18n 属性的元素
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[key]) {
+                    element.textContent = translations[key];
+                }
+            });
+
+            // 更新表格头部 placeholder 等
+            const inputs = document.querySelectorAll('input[placeholder]');
+            inputs.forEach(input => {
+                if (lang === 'en') {
+                    if (input.placeholder === '选择日期' || input.placeholder === 'Select date') {
+                        input.placeholder = 'Select date';
+                    }
+                } else {
+                    if (input.placeholder === 'Select date' || input.placeholder === '选择日期') {
+                        input.placeholder = '选择日期';
+                    }
+                }
+            });
+
+            console.log('Page content updated to:', lang);
+        }
+
         // 获取父页面传来的语言
         window.addEventListener('message', function(event) {
             if (event.data && event.data.type === 'languageChanged') {
                 const lang = event.data.language;
                 console.log('Iframe received language change:', lang);
                 document.documentElement.lang = lang;
-                // 更新页面文本
+                currentLanguage = lang;
+                document.getElementById('current-language').textContent = lang === 'zh' ? '简体中文' : 'English';
                 updatePageContent(lang);
             }
         });
-        
-        // 模拟翻译函数 - 实际应用中应该使用完整的i18n解决方案
-        function updatePageContent(lang) {
-            console.log('Updating page content to language:', lang);
-            // 这里应该根据语言加载对应的翻译文件并更新页面
-        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/layui@2.7.6/dist/layui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>

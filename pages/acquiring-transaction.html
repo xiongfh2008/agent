@@ -149,6 +149,49 @@
 </head>
 <body class="bg-gray-50">
     <div class="container mx-auto py-4 px-4 max-w-7xl">
+        <!-- 头部区域 -->
+        <div class="flex items-center justify-end mb-4">
+            <div class="flex items-center space-x-4">
+                <!-- 语言切换 -->
+                <div class="relative">
+                    <button class="flex items-center px-3 py-1.5 text-sm text-gray-600 hover:text-gray-800 rounded-md hover:bg-gray-100 transition-colors" id="language-toggle">
+                        <i class="fas fa-globe mr-2"></i>
+                        <span id="current-language">English</span>
+                        <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                    </button>
+                    <div class="absolute right-0 mt-1 w-36 bg-white border border-gray-200 rounded-md shadow-lg z-50 hidden" id="language-dropdown">
+                        <div class="py-1">
+                            <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors language-option" data-lang="zh">
+                                简体中文
+                            </button>
+                            <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors language-option" data-lang="en">
+                                English
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 用户中心 -->
+                <div class="relative">
+                    <button class="flex items-center justify-center w-8 h-8 text-gray-600 hover:text-gray-800 rounded-full hover:bg-gray-100 transition-colors" id="user-center-toggle">
+                        <i class="fas fa-user-circle text-lg"></i>
+                    </button>
+                    <div class="absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 hidden" id="user-center-dropdown">
+                        <div class="py-1">
+                            <a href="basic-settings.html" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center">
+                                <i class="fas fa-user mr-3 text-xs"></i>
+                                <span data-i18n="basic_info">基本信息</span>
+                            </a>
+                            <a href="security-settings.html" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors flex items-center">
+                                <i class="fas fa-shield-alt mr-3 text-xs"></i>
+                                <span data-i18n="security_settings">安全设置</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 搜索区域 -->
         <div class="card bg-white p-4 mb-4 border border-gray-100">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -371,22 +414,153 @@
     </div>
 
     <script>
+        // 语言包数据
+        const translations = {
+            zh: {
+                transaction_id: "交易ID",
+                merchant_order_id: "商户订单ID",
+                customer_email: "客户邮箱",
+                currency: "币种",
+                type: "类型",
+                payment_method: "付款方式",
+                status: "状态",
+                transaction_date_from: "交易日期从",
+                transaction_date_to: "交易日期到",
+                all: "全部",
+                payment_successful: "付款成功",
+                payment_failed: "付款失败",
+                pending: "待处理",
+                export: "导出",
+                reset: "重置",
+                search: "搜索",
+                transaction_time: "交易时间",
+                amount: "金额",
+                refund_amount: "退款金额", 
+                settlement_amount: "结算金额",
+                fee: "手续费",
+                operation: "操作",
+                showing: "显示",
+                to: "到",
+                of: "共",
+                results: "条记录",
+                basic_info: "基本信息",
+                security_settings: "安全设置"
+            },
+            en: {
+                transaction_id: "Transaction ID",
+                merchant_order_id: "Merchant Order ID",
+                customer_email: "Customer Email",
+                currency: "Currency",
+                type: "Type",
+                payment_method: "Payment Method",
+                status: "Status",
+                transaction_date_from: "Transaction Date From",
+                transaction_date_to: "Transaction Date To",
+                all: "All",
+                payment_successful: "Payment Successful",
+                payment_failed: "Payment Failed",
+                pending: "Pending",
+                export: "Export",
+                reset: "Reset",
+                search: "Search",
+                transaction_time: "Transaction Time",
+                amount: "Amount",
+                refund_amount: "Refund Amount",
+                settlement_amount: "Settlement Amount",
+                fee: "Fee",
+                operation: "Operation",
+                showing: "Showing",
+                to: "to",
+                of: "of",
+                results: "results",
+                basic_info: "Basic-Info",
+                security_settings: "Security Settings"
+            }
+        };
+
+        // 当前语言
+        let currentLanguage = 'en';
+
+        // 语言切换下拉菜单
+        document.getElementById('language-toggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('language-dropdown');
+            const userDropdown = document.getElementById('user-center-dropdown');
+            userDropdown.classList.add('hidden');
+            dropdown.classList.toggle('hidden');
+        });
+
+        // 用户中心下拉菜单
+        document.getElementById('user-center-toggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('user-center-dropdown');
+            const langDropdown = document.getElementById('language-dropdown');
+            langDropdown.classList.add('hidden');
+            dropdown.classList.toggle('hidden');
+        });
+
+        // 语言选项点击
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                switchLanguage(lang);
+                document.getElementById('language-dropdown').classList.add('hidden');
+            });
+        });
+
+        // 点击其他地方关闭下拉菜单
+        document.addEventListener('click', function() {
+            document.getElementById('language-dropdown').classList.add('hidden');
+            document.getElementById('user-center-dropdown').classList.add('hidden');
+        });
+
+        // 切换语言
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            
+            // 更新当前语言显示
+            const currentLangElement = document.getElementById('current-language');
+            currentLangElement.textContent = lang === 'zh' ? '简体中文' : 'English';
+            
+            // 更新页面文本
+            updatePageContent(lang);
+            
+            // 向父页面发送语言切换消息
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'languageChanged',
+                    language: lang
+                }, '*');
+            }
+        }
+
+        // 更新页面内容
+        function updatePageContent(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+        }
+
         // 获取父页面传来的语言
         window.addEventListener('message', function(event) {
             if (event.data && event.data.type === 'languageChanged') {
                 const lang = event.data.language;
                 console.log('Iframe received language change:', lang);
-                document.documentElement.lang = lang;
-                // 更新页面文本
-                updatePageContent(lang);
+                switchLanguage(lang);
             }
         });
-        
-        // 模拟翻译函数 - 实际应用中应该使用完整的i18n解决方案
-        function updatePageContent(lang) {
-            console.log('Updating page content to language:', lang);
-            // 这里应该根据语言加载对应的翻译文件并更新页面
-        }
+
+        // 初始化页面语言
+        document.addEventListener('DOMContentLoaded', function() {
+            // 确保页面加载时使用英文
+            document.documentElement.lang = 'en';
+            updatePageContent(currentLanguage);
+        });
     </script>
 </body>
 </html> 
